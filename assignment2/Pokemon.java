@@ -62,7 +62,7 @@ public class Pokemon {
 
     public String toString() {
         if (skill != null) {
-            
+
         } else {
 
         }
@@ -88,13 +88,14 @@ public class Pokemon {
             return this.atackPower;
         }
 
-        public int getEnergeCost() {
+        public int getEnergyCost() {
             return this.energyCost;
         }
 
         public String toString() {
             String skills = String.format("%s -AP: %s -EP: %s", this.nameOfSkill, this.atackPower, this.energyCost);
             return skills;
+
         }
     }
 }
