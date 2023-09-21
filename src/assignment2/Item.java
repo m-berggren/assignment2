@@ -1,4 +1,5 @@
 package assignment2;
+
 public class Item {
     private final String nameOfItem;
     private final int HPValue;
@@ -13,8 +14,7 @@ public class Item {
     //--> add equality of two items
 
     public String toString() {
-        String Item = String.format("%s heals %s HP. %.2f", nameOfItem, HPValue, weight);
-        return Item;
+        return String.format("%s heals %s HP. %.2f", nameOfItem, HPValue, weight);
     }
 
     public int useItem() {
