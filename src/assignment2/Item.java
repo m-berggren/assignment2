@@ -18,18 +18,15 @@ public class Item {
     }
 
     public int useItem() {
-        int currentHP = Pokemon.getCurrentHP();
-        int maxHP = Pokemon.getMAX_HP();
-
-        if (currentHP >= 0) {
-            currentHP += HPValue;
+        if (Pokemon.getCurrentHP() >= 0) {
+            Pokemon.getCurrentHP() += HPValue;
             String useItem = String.format("%s used %s. It healed %s HP.", Pokemon.getName(), this.nameOfItem, this.HPValue);
-            if (currentHP >= maxHP) {
-                currentHP = maxHP;
-                useItem = String.format("%s + %s = %s - %s HP cannot go beyond %s", currentHP, this.HPValue, maxHP, Pokemon.getName(), maxHP);
+            if (Pokemon.getCurrentHP() >= Pokemon.getMAX_HP()) {
+                Pokemon.getCurrentHP() = Pokemon.getMAX_HP();
+                useItem = String.format("%s + %s = %s - %s HP cannot go beyond %s", Pokemon.getCurrentHP(), this.HPValue, Pokemon.getMAX_HP(), Pokemon.getName(), Pokemon.getMAX_HP());
             }
-            Pokemon.getCurrentHP(currentHP);
-        } else if (currentHP == maxHP) {
+            Pokemon.getCurrentHP();
+        } else if (Pokemon.getCurrentHP() == Pokemon.getMAX_HP()) {
             String useItem = String.format("%s could not use %s. HP is already full.", Pokemon.getName(), this.nameOfItem);
         }
         return useItem();
