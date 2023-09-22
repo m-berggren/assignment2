@@ -26,8 +26,10 @@ public class Item {
     //--> add equality of two items
 
     public String toString() {
-        double truncateWeight = ((int)(weight*100))/100.0;
-        return String.format("%s heals %s HP. (%s)", nameOfItem, HPValue,truncateWeight);
+        // IDK still should I change the format of truncation or not
+//        double truncateWeight = ((int) (weight * 100)) / 100.00;
+//        return String.format("%s heals %s HP. (%s)", nameOfItem, HPValue, truncateWeight);
+        return String.format("%s heals %s HP. (%s)", nameOfItem, HPValue, Math.floor(weight * 100) / 100);
     }
 
 //    public int useItem() {
