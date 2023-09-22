@@ -1,3 +1,5 @@
+package assignment2;
+
 public class Pokemon {
     private String pokemonName;
     private final int MAX_HP;
@@ -48,8 +50,9 @@ public class Pokemon {
         return String.format("%s (%s). Knows %s - AP: %d EC: %d", this.pokemonName, this.pokemonType, this.attackPower, this.energyCost);
     }
 
-    public void knowsSkill() {
+    public boolean knowsSkill() {
         toString();
+        return false;
     }
 
     public void forgetSkill() {
@@ -85,85 +88,13 @@ public class Pokemon {
         this.currentEnergyPoints = Math.min(100, this.currentEnergyPoints + 25);
     }
 
-    // Not done, logic is flawed.
-    public void useItem(Item potion) {
+    public Object useItem(Item potion) {
         if (this.currentHitPoints == this.MAX_HP) {
-            // Item class TBD
-            //return String.format("%s could not use %s. HP is already full.", this.pokemonName, potion.name)
+            return String.format("%s could not use %s. HP is already full.", this.pokemonName, potion.getNameOfItem());
+        } else if (this.currentHitPoints > this.MAX_HP) {
+            return String.format("%s + %s = %s - %s HP cannot go beyond %s", this.currentHitPoints, potion.getHPValue(), this.MAX_HP, this.pokemonName, this.MAX_HP);
+        } else {
+            return String.format("%s used %s. It healed %s HP.", this.pokemonName, potion.getNameOfItem(), potion.getHPValue());
         }
-        // Item class TBD
-        //return String.format("%s used %s. It healed %d HP.", this.pokemonName, potion.name, potion.healPower)
-    }
-
-
-}
-
-
-class Skill {
-    private final String nameOfSkill;
-    private int atackPower;
-    private int energyCost;
-
-
-    public Skill(String nameOfSkill, int atackPower, int energyCost) {
-        this.nameOfSkill = nameOfSkill;
-        this.atackPower = atackPower;
-        this.energyCost = energyCost;
-    }
-
-    public String gerNameOfSkill() {
-        return this.nameOfSkill;
-    }
-
-    public int getAtackPower() {
-        return this.atackPower;
-    }
-
-    public int getEnergyCost() {
-        return this.energyCost;
-    }
-
-    public String toString() {
-        String skills = String.format("%s -AP: %s -EP: %s", this.nameOfSkill, this.atackPower, this.energyCost);
-        return skills;
-
-    }
-}
-
-class HealingItem {
-    private final String nameOfItem;
-    private final int HPValue;
-    private final double weight;
-
-    public HealingItem(String nameOfItem, int HPValue, double weight) {
-        this.nameOfItem = nameOfItem;
-        this.HPValue = HPValue;
-        this.weight = weight;
-    }
-
-    //--> add equality of two items
-
-    public String toString() {
-        String HealingItem = String.format("%s heals %s HP. %.2f", nameOfItem, HPValue, weight);
-        return HealingItem;
-    }
-
-    public int useItem() {
-        int currentHP = Pokemon.getCurrentHP();
-        int maxHP = Pokemon.getMaxHP();
-
-
-        if (currentHP >= 0) {
-            currentHP += HPValue;
-            String useItem = String.format("%s used %s. It healed %s HP.", Pokemon.getName(), nameOfItem, HPValue);
-            if (currentHP >= maxHP) {
-                currentHP = maxHP;
-                String useItem = String.format("%s + %s = %s - %s HP cannot go beyond %s", currentHP, HPValue, maxHP, Pokemon.getName(), maxHP);
-            }
-            Pokemon.getCurrentHP(currentHP);
-        } else if (currentHP == maxHP) {
-            String useItem = String.format("%s could not use %s. HP is already full.", Pokemon.getName(), nameOfItem);
-        }
-        return useItem();
     }
 }
