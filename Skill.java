@@ -2,22 +2,22 @@ package assignment2;
 
 class Skill {
     private final String nameOfSkill;
-    private int atackPower;
-    private int energyCost;
+    private final int attackPower;
+    private final int energyCost;
 
 
-    public Skill(String nameOfSkill, int atackPower, int energyCost) {
+    public Skill(String nameOfSkill, int attackPower, int energyCost) {
         this.nameOfSkill = nameOfSkill;
-        this.atackPower = atackPower;
+        this.attackPower = attackPower;
         this.energyCost = energyCost;
     }
 
-    public String gerNameOfSkill() {
+    public String getNameOfSkill() {
         return this.nameOfSkill;
     }
 
-    public int getAtackPower() {
-        return this.atackPower;
+    public int getAttackPower() {
+        return this.attackPower;
     }
 
     public int getEnergyCost() {
@@ -25,6 +25,6 @@ class Skill {
     }
 
     public String toString() {
-        return String.format("%s -AP: %s -EP: %s", this.nameOfSkill, this.atackPower, this.energyCost);
+        return String.format("%s -AP: %s -EP: %s", this.nameOfSkill, this.attackPower, this.energyCost);
     }
 }

@@ -3,7 +3,7 @@ package assignment2;
 public class Item {
     private final String nameOfItem;
     private final int HPValue;
-    private double weight;
+    private final double weight;
 
     public Item(String nameOfItem, int HPValue, double weight) {
         this.nameOfItem = nameOfItem;
