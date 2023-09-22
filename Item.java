@@ -27,7 +27,7 @@ public class Item {
 
     public String toString() {
         double truncateWeight = ((int)(weight*100))/100.0;
-        return String.format("%s heals %s HP. (%.2f)", nameOfItem, HPValue,truncateWeight);
+        return String.format("%s heals %s HP. (%s)", nameOfItem, HPValue,truncateWeight);
     }
 
 //    public int useItem() {
