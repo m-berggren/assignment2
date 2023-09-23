@@ -1,15 +1,17 @@
 package assignment2;
 
 class Skill {
-    private final String nameOfSkill;
-    private final int attackPower;
-    private final int energyCost;
+    private String nameOfSkill;
+    private int attackPower;
+    private int energyCost;
+    private boolean knowsSkill;
 
 
     public Skill(String nameOfSkill, int attackPower, int energyCost) {
-        this.nameOfSkill = nameOfSkill;
-        this.attackPower = attackPower;
-        this.energyCost = energyCost;
+        this.knowsSkill = false;
+        this.nameOfSkill = null;
+        this.attackPower = 0;
+        this.energyCost = 0;
     }
 
     public String getNameOfSkill() {

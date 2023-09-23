@@ -88,7 +88,7 @@ public class Pokemon {
         this.currentEnergyPoints = Math.min(100, this.currentEnergyPoints + 25);
     }
 
-    public Object useItem(Item potion) {
+    public String useItem(Item potion) {
         if (this.currentHitPoints == this.MAX_HP) {
             return String.format("%s could not use %s. HP is already full.", this.pokemonName, potion.getNameOfItem());
         } else if (this.currentHitPoints > this.MAX_HP) {
@@ -98,4 +98,3 @@ public class Pokemon {
         }
     }
 }
-
