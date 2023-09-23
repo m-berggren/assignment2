@@ -45,7 +45,7 @@ public class Pokemon {
 
     public String toString() {
         if (!this.knowsSkill) {
-            return String.format("%s (%s)%n", this.pokemonName, this.pokemonType);
+            return String.format("%s (%s)", this.pokemonName, this.pokemonType);
         }
         return String.format("%s (%s). Knows %s - AP: %d EC: %d", this.pokemonName, this.pokemonType, this.attackPower, this.energyCost);
     }

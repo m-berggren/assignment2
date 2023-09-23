@@ -5,7 +5,7 @@ Marcus Bergger:
 Danylo Baranov:
 -Worked on exercise number 2, 6
 
-- Oleksandr Kozlov:
+Oleksandr Kozlov:
 - Worked on exercise number 4 and 7
 
 Exercise number 9 was done in cooperation of the whole team:

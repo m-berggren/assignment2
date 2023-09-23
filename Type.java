@@ -2,16 +2,16 @@ package assignment2;
 
 public class Type {
 
-    private final pokemonType type;
+    private final PokemonType type;
 
-    public Type(pokemonType type) {
+    public Type(PokemonType type) {
         this.type = type;
     }
 
     public double calculateDamage(Pokemon target) {
         switch (this.type) {
             case WATER:
-                switch (pokemonType.WATER) { // returning multipliers
+                switch (PokemonType.WATER) { // returning multipliers
                     case FIRE:
                         return 2; //double damage
                     case GRASS:
@@ -22,7 +22,7 @@ public class Type {
                         return 1; //normal damage
                 }
             case FIRE:
-                switch (pokemonType.FIRE) {
+                switch (PokemonType.FIRE) {
                     case GRASS:
                         return 2;
                     case WATER:
@@ -33,7 +33,7 @@ public class Type {
                         return 1;
                 }
             case GRASS:
-                switch (pokemonType.GRASS) {
+                switch (PokemonType.GRASS) {
                     case WATER:
                         return 2;
                     case FIRE:
