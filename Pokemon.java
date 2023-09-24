@@ -45,7 +45,7 @@ public class Pokemon {
 
     public String toString() {
         if (!this.knowsSkill) {
-            return String.format("%s (%s)%n", this.pokemonName, this.pokemonType);
+            return String.format("%s (%s)", this.pokemonName, this.pokemonType);
         }
         return String.format("%s (%s). Knows %s - AP: %d EC: %d", this.pokemonName, this.pokemonType, this.attackPower, this.energyCost);
     }
@@ -88,7 +88,8 @@ public class Pokemon {
         this.currentEnergyPoints = Math.min(100, this.currentEnergyPoints + 25);
     }
 
-    public Object useItem(Item potion) {
+
+    public String useItem(Item potion) {
         if (this.currentHitPoints == this.MAX_HP) {
             return String.format("%s could not use %s. HP is already full.", this.pokemonName, potion.getNameOfItem());
         } else if (this.currentHitPoints > this.MAX_HP) {
