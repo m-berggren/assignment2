@@ -9,6 +9,7 @@ public class Pokemon {
 
     private boolean hasLearnedSkill;
     private Skill skill;
+    private PokemonType hello;
 
 
     public Pokemon(String pokemonName, int maxHitPoints, String pokemonType) {
@@ -19,6 +20,7 @@ public class Pokemon {
         this.currentEnergyPoints = 100;
         this.hasLearnedSkill = false;
         this.skill = null;
+
 
     }
 
@@ -40,6 +42,15 @@ public class Pokemon {
 
     public int getCurrentHP() {
         return this.currentHitPoints;
+    }
+
+    public PokemonType mapType(String typeName) {
+        return switch(typeName.toLowerCase()) {
+            case "water" -> PokemonType.WATER;
+            case "fire" -> PokemonType.FIRE;
+            case "grass" -> PokemonType.GRASS;
+            default -> PokemonType.NORMAL;
+        };
     }
 
     @Override
@@ -85,14 +96,64 @@ public class Pokemon {
 
     5: If the attacker has enough EP to use the Skill, then the attack is successful.
         */
-    public Pokemon attack(Pokemon opponentToAttack) {
-        this.currentEnergyPoints -= this.skill.getEnergyCost();
-        opponentToAttack.currentHitPoints -= this.skill.getAttackPower();
-        return opponentToAttack;
+    public String attack(Pokemon opponent) {
+        // If the attacker has fainted.
+        if (this.currentHitPoints == 0) {
+            return String.format("Attack failed. %s fainted.", this.pokemonName);
+
+            // If target pokemon has fainted.
+        } else if (opponent.currentHitPoints == 0) {
+            return String.format("Attack failed. %s fainted.", opponent.pokemonName);
+
+            // If attacker does not know a skill.
+        } else if (!knowsSkill()) {
+            return String.format("Attack failed. %s does not know a skill.", this.pokemonName);
+
+            // If the attacker knows a skill and has less energy points than the cost of the skill (ec)
+        } else if (knowsSkill() && this.currentEnergyPoints < skill.getEnergyCost()) {
+            return String.format("Attack failed. %s lacks energy: %d//%d",
+                    this.pokemonName,
+                    this.currentEnergyPoints,
+                    skill.getEnergyCost()
+            );
+            // If attacker has enough EP to use skill, attack is successful.
+        } else {
+
+
+            Type type = new Type(mapType(this.pokemonType));
+            Type opponentType = new Type(mapType(opponent.pokemonType));
+            // Show if attack is super effective or not effective.
+            double valueMultiplier = type.calculateDamage(opponentType);
+
+            // Show if opponent faints or not after the attack.
+            int HPLeft = opponent.currentHitPoints - (int)(this.skill.getAttackPower()*valueMultiplier);
+            if (HPLeft > 0) {
+                opponent.currentHitPoints = HPLeft;
+                this.currentEnergyPoints -= this.skill.getEnergyCost();
+                return String.format("%s%n%s has %d HP left.", multiplierMessage(valueMultiplier, opponent), opponent.pokemonName, opponent.getCurrentHP());
+
+            } else {
+                opponent.currentHitPoints = 0;
+                this.currentEnergyPoints -= this.skill.getEnergyCost();
+                return String.format("%s%n%s has 0 HP left. %s faints.", multiplierMessage(valueMultiplier, opponent), opponent.pokemonName, opponent.pokemonName);
+            }
+        }
+    }
+
+    public String multiplierMessage(double multiplier, Pokemon opponent) {
+        if (multiplier > 1) {
+            return String.format("%s uses %s on %s. It is super effective!", this.pokemonName, this.skill.getNameOfSkill(), opponent.pokemonName);
+
+        } else if (multiplier < 1) {
+            return String.format("%s uses %s on %s. It is not very effective...", this.pokemonName, this.skill.getNameOfSkill(), opponent.pokemonName);
+        }
+        return String.format("%s uses %s on %s.", this.pokemonName, this.skill.getNameOfSkill(), opponent.pokemonName);
     }
 
     public void rest() {
-        this.currentHitPoints = Math.min(this.maxHitPoints, this.currentHitPoints + 20);
+        if(this.currentHitPoints != 0) {
+            this.currentHitPoints = Math.min(this.maxHitPoints, this.currentHitPoints + 20);
+        }
     }
 
     public void recoverEnergy() {
