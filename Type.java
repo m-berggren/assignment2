@@ -10,41 +10,33 @@ public class Type {
 
     public double calculateDamage(Pokemon target) {
         switch (this.type) {
-            case WATER:
-                switch (PokemonType.WATER) { // returning multipliers
-                    case FIRE:
-                        return 2; //double damage
-                    case GRASS:
-                        return 0.5;
-                    case WATER:
-                        return 0.5; //half damage
-                    default:
-                        return 1; //normal damage
-                }
-            case FIRE:
-                switch (PokemonType.FIRE) {
-                    case GRASS:
-                        return 2;
-                    case WATER:
-                        return 0.5;
-                    case FIRE:
-                        return 0.5;
-                    default:
-                        return 1;
-                }
-            case GRASS:
-                switch (PokemonType.GRASS) {
-                    case WATER:
-                        return 2;
-                    case FIRE:
-                        return 0.5;
-                    case GRASS:
-                        return 0.5;
-                    default:
-                        return 1;
-                }
-            default:
+            case WATER -> {
+                return switch (PokemonType.WATER) { // returning multipliers
+                    case FIRE -> 2; //double damage
+                    case GRASS -> 0.5;
+                    case WATER -> 0.5; //half damage
+                    default -> 1; //normal damage
+                };
+            }
+            case FIRE -> {
+                return switch (PokemonType.FIRE) {
+                    case GRASS -> 2;
+                    case WATER -> 0.5;
+                    case FIRE -> 0.5;
+                    default -> 1;
+                };
+            }
+            case GRASS -> {
+                return switch (PokemonType.GRASS) {
+                    case WATER -> 2;
+                    case FIRE -> 0.5;
+                    case GRASS -> 0.5;
+                    default -> 1;
+                };
+            }
+            default -> {
                 return 1;
+            }
         }
     }
 

@@ -2,25 +2,24 @@ package assignment2;
 
 public class Pokemon {
     private String pokemonName;
-    private final int MAX_HP;
+    private final int maxHitPoints;
     private final String pokemonType;
     private int currentHitPoints;
     private int currentEnergyPoints;
-    private boolean knowsSkill;
-    private String nameOfSkill;
-    private int attackPower;
-    private int energyCost;
+
+    private boolean hasLearnedSkill;
+    private Skill skill;
+
 
     public Pokemon(String pokemonName, int maxHitPoints, String pokemonType) {
         this.pokemonName = pokemonName;
-        this.MAX_HP = maxHitPoints;
+        this.maxHitPoints = maxHitPoints;
         this.pokemonType = pokemonType;
         this.currentHitPoints = maxHitPoints;
         this.currentEnergyPoints = 100;
-        this.knowsSkill = false;
-        this.nameOfSkill = null;
-        this.attackPower = 0;
-        this.energyCost = 0;
+        this.hasLearnedSkill = false;
+        this.skill = null;
+
     }
 
     public String getName() {
@@ -32,7 +31,7 @@ public class Pokemon {
     }
 
     public int getMAX_HP() {
-        return this.MAX_HP;
+        return this.maxHitPoints;
     }
 
     public String getType() {
@@ -43,57 +42,68 @@ public class Pokemon {
         return this.currentHitPoints;
     }
 
+    @Override
     public String toString() {
-        if (!this.knowsSkill) {
+        if (!knowsSkill()) {
             return String.format("%s (%s)", this.pokemonName, this.pokemonType);
         }
-        return String.format("%s (%s). Knows %s - AP: %d EC: %d", this.pokemonName, this.pokemonType, this.attackPower, this.energyCost);
+        return String.format("%s (%s). Knows %s - AP: %d EC: %d",
+                this.pokemonName,
+                this.pokemonType,
+                this.skill.getNameOfSkill(),
+                this.skill.getAttackPower(),
+                this.skill.getEnergyCost());
     }
 
+
     public boolean knowsSkill() {
-        toString();
-        return false;
+        return hasLearnedSkill;
     }
 
     public void forgetSkill() {
-        this.knowsSkill = false;
-        this.nameOfSkill = "";
-        this.attackPower = 0;
-        this.energyCost = 0;
-        toString();
+        this.hasLearnedSkill = false;
     }
 
     public void learnSkill(String nameOfSkill, int attackPower, int energyCost) {
-        this.knowsSkill = true;
-        this.nameOfSkill = nameOfSkill;
-        this.attackPower = attackPower;
-        this.energyCost = energyCost;
+        this.hasLearnedSkill = true;
+        this.skill = new Skill(nameOfSkill, attackPower, energyCost);
     }
 
-    /* TBD:
-     * Add type checks (super effective / not effective / normal)
-     * Check so HP does not go below zero.
-     */
+    /*
+    Attacking/receiving damage
+    1: If the attacking pokemon is fainted, the message should be:
+        "Attack failed. <attacker> fainted."
+
+    2: If the target pokemon is fainted, the message should be:
+        "Attack failed. <target> fainted."
+
+    3: If the attacking pokemon does not know a skill, the message should be:
+        "Attack failed. <attacker> does not know a skill."
+
+    4: If the attacker knows a skill and has less energy points than the cost of the skill (ec):
+        "Attack failed. <attacker> lacks energy: <ep>/<ec>"
+
+    5: If the attacker has enough EP to use the Skill, then the attack is successful.
+        */
     public Pokemon attack(Pokemon opponentToAttack) {
-        this.currentEnergyPoints -= this.energyCost;
-        opponentToAttack.currentHitPoints -= this.attackPower;
+        this.currentEnergyPoints -= this.skill.getEnergyCost();
+        opponentToAttack.currentHitPoints -= this.skill.getAttackPower();
         return opponentToAttack;
     }
 
     public void rest() {
-        this.currentHitPoints = Math.min(this.MAX_HP, this.currentHitPoints + 20);
+        this.currentHitPoints = Math.min(this.maxHitPoints, this.currentHitPoints + 20);
     }
 
     public void recoverEnergy() {
         this.currentEnergyPoints = Math.min(100, this.currentEnergyPoints + 25);
     }
 
-
     public String useItem(Item potion) {
-        if (this.currentHitPoints == this.MAX_HP) {
+        if (this.currentHitPoints == this.maxHitPoints) {
             return String.format("%s could not use %s. HP is already full.", this.pokemonName, potion.getNameOfItem());
-        } else if (this.currentHitPoints > this.MAX_HP) {
-            return String.format("%s + %s = %s - %s HP cannot go beyond %s", this.currentHitPoints, potion.getHPValue(), this.MAX_HP, this.pokemonName, this.MAX_HP);
+        } else if (this.currentHitPoints > this.maxHitPoints) {
+            return String.format("%s + %s = %s - %s HP cannot go beyond %s", this.currentHitPoints, potion.getHPValue(), this.maxHitPoints, this.pokemonName, this.maxHitPoints);
         } else {
             return String.format("%s used %s. It healed %s HP.", this.pokemonName, potion.getNameOfItem(), potion.getHPValue());
         }
