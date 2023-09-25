@@ -68,7 +68,7 @@ public class Pokemon {
         return isEqual;
     }
 
-    public boolean checkIfSkillsAreEqual(Pokemon anotherPokemon) {
+    private boolean checkIfSkillsAreEqual(Pokemon anotherPokemon) {
         // Method added to
         boolean isEqual = false;
         if(this.skill == null && anotherPokemon.getSkill() == null) {
@@ -83,15 +83,13 @@ public class Pokemon {
 
     @Override
     public String toString() {
+        String message = "";
         if (!knowsSkill()) {
-            return String.format("%s (%s)", this.name, this.type);
+            message = this.name + " (" + this.type + ")";
+        } else {
+            message = this.name + " (" + this.type + "). Knows " + this.skill.toString();
         }
-        return String.format("%s (%s). Knows %s - AP: %d EC: %d",
-                this.name,
-                this.type,
-                this.skill.getNameOfSkill(),
-                this.skill.getAttackPower(),
-                this.skill.getEnergyCost());
+        return message;
     }
 
     public boolean knowsSkill() {
@@ -123,56 +121,61 @@ public class Pokemon {
     5: If the attacker has enough EP to use the Skill, then the attack is successful.
         */
     public String attack(Pokemon defender) {
-        // If the attacker has fainted.
+        String message = "";
+        // If the attacker has fainted (currentHP == 0).
         if (this.currentHP == 0) {
-            return String.format("Attack failed. %s fainted.", this.name);
+            message = "Attack failed. "+ this.name + " fainted.";
 
-            // If target pokemon has fainted.
+            // If target pokemon has fainted (currentHP == 0.
         } else if (defender.currentHP == 0) {
-            return String.format("Attack failed. %s fainted.", defender.name);
+            message = "Attack failed. " + defender.getName() + " fainted.";
 
             // If attacker does not know a skill.
         } else if (!knowsSkill()) {
-            return String.format("Attack failed. %s does not know a skill.", this.name);
+            message = "Attack failed. " + this.name + " does not know a skill.";
 
-            // If the attacker knows a skill and has less energy points than the cost of the skill (ec)
+            // If the attacker knows a skill and has less energy points than the cost of the skill
         } else if (knowsSkill() && this.currentEP < skill.getEnergyCost()) {
-            return String.format("Attack failed. %s lacks energy: %d//%d",
-                    this.name,
-                    this.currentEP,
-                    skill.getEnergyCost()
-            );
+            message = "Attack failed. " + this.name + "lacks energy: " + this.currentEP + "/" + this.skill.getEnergyCost();
+
             // If attacker has enough EP to use skill, attack is successful.
         } else {
-            //
-            Type attackerType = new Type(this.type);
-            Type defenderType = new Type(defender.getType());
-            // Show if attack is super effective or not effective.
-            double valueMultiplier = attackerType.calculateDamage(defenderType);
+            // Gets a value multiplier for the attack. Possible outcomes: {0.5, 1.0, 2}.
+            double valueMultiplier = getValueMultiplier(this.type, defender.getType());
+
+            message = this.name + " uses " + this.skill.getNameOfSkill() + " on " + defender.getName() + ".";
 
             // Show if defender faints or not after the attack.
             int HPLeft = defender.currentHP - (int) (this.skill.getAttackPower() * valueMultiplier);
             if (HPLeft > 0) {
                 defender.currentHP = HPLeft;
                 this.currentEP -= this.skill.getEnergyCost();
-                return String.format("%s%n%s has %d HP left.", multiplierMessage(valueMultiplier, defender), defender.name, defender.getCurrentHP());
+                message += multiplierMessage(valueMultiplier) + "\r\n" + defender.getName() + " has " + defender.getCurrentHP() + " HP left.";
 
             } else {
                 defender.currentHP = 0;
                 this.currentEP -= this.skill.getEnergyCost();
-                return String.format("%s%n%s has 0 HP left. %s faints.", multiplierMessage(valueMultiplier, defender), defender.name, defender.name);
+                message += multiplierMessage(valueMultiplier) + "\r\n" + defender.getName() + " has 0 HP left. " + defender.getName()+ " faints.";
             }
         }
+        return message;
     }
 
-    public String multiplierMessage(double multiplier, Pokemon opponent) {
+    private double getValueMultiplier(String attacker, String defender) {
+        Type attackerType = new Type(attacker);
+        Type defenderType = new Type(defender);
+        return attackerType.calculateDamage(defenderType);
+    }
+
+    private String multiplierMessage(double multiplier) {
+        String message = "";
         if (multiplier > 1) {
-            return String.format("%s uses %s on %s. It is super effective!", this.name, this.skill.getNameOfSkill(), opponent.name);
+            message = " It is super effective!";
 
         } else if (multiplier < 1) {
-            return String.format("%s uses %s on %s. It is not very effective...", this.name, this.skill.getNameOfSkill(), opponent.name);
+            message = " It is not very effective...";
         }
-        return String.format("%s uses %s on %s.", this.name, this.skill.getNameOfSkill(), opponent.name);
+        return message;
     }
 
     public void rest() {
