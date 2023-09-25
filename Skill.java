@@ -26,4 +26,6 @@ public class Skill {
     public String toString() {
         return String.format("%s -AP: %s -EP: %s", this.nameOfSkill, this.attackPower, this.energyCost);
     }
+
+
 }

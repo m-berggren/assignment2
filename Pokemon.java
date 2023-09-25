@@ -61,8 +61,6 @@ public class Pokemon {
             boolean sameMaxHP = this.maxHP == anotherPokemon.getMAX_HP();
             boolean sameEP = this.currentEP == anotherPokemon.getEnergy();
             isEqual = sameName && sameSkill && sameHP && sameMaxHP && sameEP;
-            // name, type, skill, HP, MAX HP and EP.
-            // Check the skill how?
         }
         return isEqual;
     }
@@ -143,12 +141,16 @@ public class Pokemon {
             if (HPLeft > 0) {
                 defender.currentHP = HPLeft;
                 this.currentEP -= this.skill.getEnergyCost();
-                return String.format("%s%n%s has %d HP left.", multiplierMessage(valueMultiplier, defender), defender.name, defender.getCurrentHP());
+                return String.format("%s%n%s has %d HP left.",
+                        multiplierMessage(valueMultiplier, defender),
+                        defender.name, defender.getCurrentHP());
 
             } else {
                 defender.currentHP = 0;
                 this.currentEP -= this.skill.getEnergyCost();
-                return String.format("%s%n%s has 0 HP left. %s faints.", multiplierMessage(valueMultiplier, defender), defender.name, defender.name);
+                return String.format("%s%n%s has 0 HP left. %s faints.",
+                        multiplierMessage(valueMultiplier, defender),
+                        defender.name, defender.name);
             }
         }
     }
