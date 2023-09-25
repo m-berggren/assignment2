@@ -30,6 +30,8 @@ public class Skill {
         return this.energyCost;
     }
 
+    // Method to check if two Skills are equal
+    // Skills are equal when their Name, AP and EP values are equal
     public boolean equals(Object anotherObject) {
         boolean isEqual = false;
         if (anotherObject == this) {

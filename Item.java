@@ -33,7 +33,7 @@ public class Item {
     }
 
     // Method to check if two Items are equal
-    // Items are equal when their Hp, weight and name are equal
+    // Items are equal when their Hp, weight and name values are equal
     public boolean equals(Object anotherObject) {
         boolean isEqual = false;
         if (anotherObject == this) {
