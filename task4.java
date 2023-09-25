@@ -11,96 +11,65 @@ public class task4 {
         public double calculateDamage(Pokemon target) {
             switch (this.type) {
                 case BUG:
-                    switch (target.type) {
-                        case FIRE:
-                            return 0.5;
-                        case GRASS:
-                            return 2;
-                        default:
-                            return 1;
-                    }
+                    return switch (target.type) {
+                        case FIRE -> 0.5;
+                        case GRASS -> 2;
+                        default -> 1;
+                    };
                 case DRAGON:
-                    switch (target.type) {
-                        case DRAGON:
-                            return 2;
-                        default:
-                            return 1;
-                    }
+                    return switch (target.type) {
+                        case DRAGON -> 2;
+                        default -> 1;
+                    };
                 case ELECTRIC:
-                    switch (target.type) {
-                        case DRAGON:
-                            return 0.5;
-                        case ELECTRIC:
-                            return 0.5;
-                        case GRASS:
-                            return 0.5;
-                        case WATER:
-                            return 2;
-                        default:
-                            return 1;
-                    }
+                    return switch (target.type) {
+                        case DRAGON -> 0.5;
+                        case ELECTRIC -> 0.5;
+                        case GRASS -> 0.5;
+                        case WATER -> 2;
+                        default -> 1;
+                    };
 
                 case FIRE:
-                    switch (target.type) {
-                        case BUG:
-                            return 2;
-                        case DRAGON:
-                            return 0.5;
-                        case FIRE:
-                            return 0.5;
-                        case GRASS:
-                            return 2;
-                        case ICE:
-                            return 2;
-                        case WATER:
-                            return 0.5;
-                        default:
-                            return 1;
-                    }
-                case GRASS:
-                    switch (target.type) {
-                        case BUG:
-                            return 0.5;
-                        case DRAGON:
-                            return 0.5;
-                        case FIRE:
-                            return 0.5;
-                        case GRASS:
-                            return 0.5;
-                        case WATER:
-                            return 2;
-                        default:
-                            return 1;
-                    }
-                case ICE:
-                    switch (target.type) {
-                        case DRAGON:
-                            return 2;
-                        case FIRE:
-                            return 0.5;
-                        case GRASS:
-                            return 2;
-                        case ICE:
-                            return 0.5;
-                        case WATER:
-                            return 0.5;
-                        default:
-                            return 1;
-                    }
-                case WATER:
-                    switch (target.type) { // returning multipliers
-                        case DRAGON:
-                            return 0.5;
-                        case FIRE:
-                            return 2; // double damage
-                        case GRASS:
-                            return 0.5;
-                        case WATER:
-                            return 0.5; // half damage
+                    return switch (target.type) {
+                        case BUG -> 2;
+                        case DRAGON -> 0.5;
+                        case FIRE -> 0.5;
+                        case GRASS -> 2;
+                        case ICE -> 2;
+                        case WATER -> 0.5;
+                        default -> 1;
 
-                        default:
-                            return 1; // normal damage
-                    }
+                    };
+                case GRASS:
+                    return switch (target.type) {
+                        case BUG -> 0.5;
+                        case DRAGON -> 0.5;
+                        case FIRE -> 0.5;
+                        case GRASS -> 0.5;
+                        case WATER -> 2;
+                        default -> 1;
+
+                    };
+                case ICE:
+                    return switch (target.type) {
+
+                        case DRAGON -> 2;
+                        case FIRE -> 0.5;
+                        case GRASS -> 2;
+                        case ICE -> 0.5;
+                        case WATER -> 0.5;
+                        default -> 1;
+                    };
+                case WATER:
+                    return switch (target.type) { // returning multipliers
+                        case DRAGON -> 0.5;
+                        case FIRE -> 2; // double damage
+                        case GRASS -> 0.5;
+                        case WATER -> 0.5; // half damage
+
+                        default -> 1; // normal damage
+                    };
                 default:
                     return 1;
             }
