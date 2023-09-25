@@ -1,7 +1,5 @@
 package assignment2;
 
-import java.util.Objects;
-
 public class Item {
     // initialise attributes of name,HP and weight of Item
     // use encapsulation and immutable objects to make code robust
