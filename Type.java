@@ -9,7 +9,7 @@ public class Type {
     }
 
     public PokemonType mapType(String typeName) {
-        return switch(typeName.toLowerCase()) {
+        return switch (typeName.toLowerCase()) {
             case "bug" -> PokemonType.BUG;
             case "dragon" -> PokemonType.DRAGON;
             case "electric" -> PokemonType.ELECTRIC;

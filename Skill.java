@@ -30,6 +30,23 @@ public class Skill {
         return this.energyCost;
     }
 
+    public boolean equals(Object anotherObject) {
+        boolean isEqual = false;
+        if (anotherObject == this) {
+            isEqual = true;
+        } else if (anotherObject == null) {
+            isEqual = false;
+        } else {
+            Skill anotherSkill = (Skill) anotherObject;
+            boolean sameName = this.nameOfSkill.equals(anotherSkill.nameOfSkill);
+            boolean sameAP = this.attackPower == anotherSkill.getAttackPower();
+            boolean sameEP = this.energyCost == anotherSkill.getEnergyCost();
+
+            isEqual = sameName && sameAP && sameEP;
+        }
+        return isEqual;
+    }
+
     // toString method to return message of Skill name, AP and EP
     public String toString() {
         return String.format("%s -AP: %s -EP: %s", this.nameOfSkill, this.attackPower, this.energyCost);

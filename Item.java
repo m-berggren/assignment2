@@ -1,5 +1,6 @@
 package assignment2;
 
+import java.util.Objects;
 
 public class Item {
     // initialise attributes of name,HP and weight of Item
@@ -39,14 +40,13 @@ public class Item {
             isEqual = true;
         } else if (anotherObject == null) {
             isEqual = false;
-        } else if (anotherObject instanceof Pokemon) {
+        } else {
             Item anotherItem = (Item) anotherObject;
             boolean sameHP = this.HPValue == anotherItem.getHPValue();
             boolean sameWeight = this.weight == anotherItem.getWeight();
             boolean sameName = this.nameOfItem.equals(anotherItem.nameOfItem);
-            return isEqual == sameHP && sameWeight && sameName;
-        } else {
-            isEqual = false;
+
+            isEqual = sameHP && sameWeight && sameName;
         }
         return isEqual;
     }
