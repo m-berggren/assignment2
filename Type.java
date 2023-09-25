@@ -4,49 +4,88 @@ public class Type {
 
     private final PokemonType type;
 
-    public Type(PokemonType type) {
-        this.type = type;
+    public Type(String type) {
+        this.type = mapType(type);
     }
 
-    public double calculateDamage(Pokemon target) {
+    public PokemonType mapType(String typeName) {
+        return switch (typeName.toLowerCase()) {
+            case "bug" -> PokemonType.BUG;
+            case "dragon" -> PokemonType.DRAGON;
+            case "electric" -> PokemonType.ELECTRIC;
+            case "fire" -> PokemonType.FIRE;
+            case "grass" -> PokemonType.GRASS;
+            case "ice" -> PokemonType.ICE;
+            case "water" -> PokemonType.WATER;
+            default -> PokemonType.NORMAL;
+        };
+    }
+
+    public double calculateDamage(Type target) {
         switch (this.type) {
-            case WATER:
-                switch (PokemonType.WATER) { // returning multipliers
-                    case FIRE:
-                        return 2; //double damage
-                    case GRASS:
-                        return 0.5;
-                    case WATER:
-                        return 0.5; //half damage
-                    default:
-                        return 1; //normal damage
-                }
+            case BUG:
+                return switch (target.type) {
+                    case FIRE -> 0.5;
+                    case GRASS -> 2;
+                    default -> 1;
+                };
+            case DRAGON:
+                return switch (target.type) {
+                    case DRAGON -> 2;
+                    default -> 1;
+                };
+            case ELECTRIC:
+                return switch (target.type) {
+                    case DRAGON -> 0.5;
+                    case ELECTRIC -> 0.5;
+                    case GRASS -> 0.5;
+                    case WATER -> 2;
+                    default -> 1;
+                };
+
             case FIRE:
-                switch (PokemonType.FIRE) {
-                    case GRASS:
-                        return 2;
-                    case WATER:
-                        return 0.5;
-                    case FIRE:
-                        return 0.5;
-                    default:
-                        return 1;
-                }
+                return switch (target.type) {
+                    case BUG -> 2;
+                    case DRAGON -> 0.5;
+                    case FIRE -> 0.5;
+                    case GRASS -> 2;
+                    case ICE -> 2;
+                    case WATER -> 0.5;
+                    default -> 1;
+
+                };
             case GRASS:
-                switch (PokemonType.GRASS) {
-                    case WATER:
-                        return 2;
-                    case FIRE:
-                        return 0.5;
-                    case GRASS:
-                        return 0.5;
-                    default:
-                        return 1;
-                }
-            default:
+                return switch (target.type) {
+                    case BUG -> 0.5;
+                    case DRAGON -> 0.5;
+                    case FIRE -> 0.5;
+                    case GRASS -> 0.5;
+                    case WATER -> 2;
+                    default -> 1;
+
+                };
+            case ICE:
+                return switch (target.type) {
+
+                    case DRAGON -> 2;
+                    case FIRE -> 0.5;
+                    case GRASS -> 2;
+                    case ICE -> 0.5;
+                    case WATER -> 0.5;
+                    default -> 1;
+                };
+            case WATER:
+                return switch (target.type) { // returning multipliers
+                    case DRAGON -> 0.5;
+                    case FIRE -> 2; // double damage
+                    case GRASS -> 0.5;
+                    case WATER -> 0.5; // half damage
+
+                    default -> 1; // normal damage
+                };
+            default: {
                 return 1;
+            }
         }
     }
-
-
 }
