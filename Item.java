@@ -1,41 +1,57 @@
 package assignment2;
 
-import java.util.Objects;
 
 public class Item {
+    // initialise attributes of name,HP and weight of Item
+    // use encapsulation and immutable objects to make code robust
+    // as well to improve maintenance of the class
     private final String nameOfItem;
     private final int HPValue;
     private final double weight;
 
+    // constructor for attributes
     public Item(String nameOfItem, int HPValue, double weight) {
         this.nameOfItem = nameOfItem;
         this.HPValue = HPValue;
         this.weight = weight;
     }
 
+    // Method to get Name of Item
     public String getNameOfItem() {
         return nameOfItem;
     }
 
+    // Method to get HP value of Item
     public int getHPValue() {
         return HPValue;
     }
 
+    // Method to get Weight of Item
     public double getWeight() {
         return weight;
     }
 
-    public boolean equals(Object ItemEquality) {
+    // Method to check if two Items are equal
+    // Items are equal when their Hp, weight and name are equal
+    public boolean equals(Object anotherObject) {
         boolean isEqual = false;
-        if (ItemEquality == this || ItemEquality instanceof Pokemon) {
+        if (anotherObject == this) {
             isEqual = true;
-        } else if (ItemEquality == null || getClass() != ItemEquality.getClass()) {
+        } else if (anotherObject == null) {
+            isEqual = false;
+        } else if (anotherObject instanceof Pokemon) {
+            Item anotherItem = (Item) anotherObject;
+            boolean sameHP = this.HPValue == anotherItem.getHPValue();
+            boolean sameWeight = this.weight == anotherItem.getWeight();
+            boolean sameName = this.nameOfItem.equals(anotherItem.nameOfItem);
+            return isEqual == sameHP && sameWeight && sameName;
+        } else {
             isEqual = false;
         }
-        Item item = (Item) ItemEquality;
-        return HPValue == item.HPValue && Double.compare(item.weight, weight) == 0 && Objects.equals(nameOfItem, item.nameOfItem);
+        return isEqual;
     }
 
+    // toString method to truncate value of the weight to a precision of two decimals
     public String toString() {
         double truncateWeight = ((int) (weight * 100)) / 100.0;
         return String.format("%s heals %s HP. (%.2f)", nameOfItem, HPValue, truncateWeight);

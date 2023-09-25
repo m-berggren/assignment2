@@ -49,9 +49,9 @@ public class Pokemon {
     public boolean equals(Object anotherObject) {
         // check if reference is equal to itself and if reference is nothing
         boolean isEqual = false;
-        if(anotherObject == this) {
+        if (anotherObject == this) {
             isEqual = true;
-        } else if(anotherObject == null || anotherObject.getClass() != getClass()) {
+        } else if (anotherObject == null || anotherObject.getClass() != getClass()) {
             isEqual = false;
         } else {
             Pokemon anotherPokemon = (Pokemon) anotherObject;
@@ -61,6 +61,8 @@ public class Pokemon {
             boolean sameMaxHP = this.maxHP == anotherPokemon.getMAX_HP();
             boolean sameEP = this.currentEP == anotherPokemon.getEnergy();
             isEqual = sameName && sameSkill && sameHP && sameMaxHP && sameEP;
+            // name, type, skill, HP, MAX HP and EP.
+            // Check the skill how?
         }
         return isEqual;
     }
@@ -137,20 +139,16 @@ public class Pokemon {
             double valueMultiplier = attackerType.calculateDamage(defenderType);
 
             // Show if defender faints or not after the attack.
-            int HPLeft = defender.currentHP - (int)(this.skill.getAttackPower()*valueMultiplier);
+            int HPLeft = defender.currentHP - (int) (this.skill.getAttackPower() * valueMultiplier);
             if (HPLeft > 0) {
                 defender.currentHP = HPLeft;
                 this.currentEP -= this.skill.getEnergyCost();
-                return String.format("%s%n%s has %d HP left.",
-                        multiplierMessage(valueMultiplier, defender),
-                        defender.name, defender.getCurrentHP());
+                return String.format("%s%n%s has %d HP left.", multiplierMessage(valueMultiplier, defender), defender.name, defender.getCurrentHP());
 
             } else {
                 defender.currentHP = 0;
                 this.currentEP -= this.skill.getEnergyCost();
-                return String.format("%s%n%s has 0 HP left. %s faints.",
-                        multiplierMessage(valueMultiplier, defender),
-                        defender.name, defender.name);
+                return String.format("%s%n%s has 0 HP left. %s faints.", multiplierMessage(valueMultiplier, defender), defender.name, defender.name);
             }
         }
     }
@@ -166,7 +164,7 @@ public class Pokemon {
     }
 
     public void rest() {
-        if(this.currentHP != 0) {
+        if (this.currentHP != 0) {
             this.currentHP = Math.min(this.maxHP, this.currentHP + 20);
         }
     }
@@ -175,19 +173,20 @@ public class Pokemon {
         this.currentEP = Math.min(100, this.currentEP + 25);
     }
 
-    public String useItem(Item potion) {
-        int healthHealed = 0;
+    public String useItem(Item nameOfObject) {
+        // Check if HP of Pokemon is equal to his Max HP
+        // If the statement is true then Pokemon can not use item
         if (this.currentHP == this.maxHP) {
-            return String.format("%s could not use %s. HP is already full.", this.name, potion.getNameOfItem());
-        } else if (this.currentHP > this.maxHP) {
-            return String.format("%s + %s = %s - %s HP cannot go beyond %s", this.currentHP, potion.getHPValue(), this.maxHP, this.name, this.maxHP);
-        } else if(potion.getHPValue() + this.currentHP > this.maxHP) {
-            healthHealed = this.maxHP - this.currentHP;
-            this.currentHP = Math.min(this.maxHP,this.currentHP + potion.getHPValue());
-            return String.format("%s used %s. It healed %s HP.", this.name, potion.getNameOfItem(), healthHealed);
-        } else{
-            this.currentHP = Math.min(this.maxHP,this.currentHP + potion.getHPValue());
-            return String.format("%s used %s. It healed %s HP.", this.name, potion.getNameOfItem(), potion.getHPValue());
+            return String.format("%s could not use %s. HP is already full.", this.name, nameOfObject.getNameOfItem());
         }
+
+        // initialise variable healthHealed, to get healed HP after using item
+        // (if item HP heal value + current HP of Pokemon is bigger than Pokemon Max HP)
+        int healthHealed = Math.min(this.maxHP - this.currentHP, nameOfObject.getHPValue());
+        this.currentHP += healthHealed;
+
+        // return what item was used and what amount of HP it healed
+        return String.format("%s used %s. It healed %s HP.", this.name, nameOfObject.getNameOfItem(), healthHealed);
     }
+
 }
