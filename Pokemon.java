@@ -104,22 +104,7 @@ public class Pokemon {
         this.skill = new Skill(nameOfSkill, attackPower, energyCost);
     }
 
-    /*
-    Attacking/receiving damage
-    1: If the attacking pokemon is fainted, the message should be:
-        "Attack failed. <attacker> fainted."
 
-    2: If the target pokemon is fainted, the message should be:
-        "Attack failed. <target> fainted."
-
-    3: If the attacking pokemon does not know a skill, the message should be:
-        "Attack failed. <attacker> does not know a skill."
-
-    4: If the attacker knows a skill and has less energy points than the cost of the skill (ec):
-        "Attack failed. <attacker> lacks energy: <ep>/<ec>"
-
-    5: If the attacker has enough EP to use the Skill, then the attack is successful.
-        */
     public String attack(Pokemon defender) {
         String message = "";
         // If the attacker has fainted (currentHP == 0).
@@ -140,13 +125,14 @@ public class Pokemon {
 
             // If attacker has enough EP to use skill, attack is successful.
         } else {
+
             // Gets a value multiplier for the attack. Possible outcomes: {0.5, 1.0, 2}.
             double valueMultiplier = getValueMultiplier(this.type, defender.getType());
 
             message = this.name + " uses " + this.skill.getNameOfSkill() + " on " + defender.getName() + ".";
 
-            // Show if defender faints or not after the attack.
             int HPLeft = defender.currentHP - (int) (this.skill.getAttackPower() * valueMultiplier);
+            // Check if defender faints or not after the attack.
             if (HPLeft > 0) {
                 defender.currentHP = HPLeft;
                 this.currentEP -= this.skill.getEnergyCost();
