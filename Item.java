@@ -25,17 +25,15 @@ public class Item {
         return weight;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Item item = (Item) o;
+    public boolean equals(Object ItemEquality) {
+        boolean isEqual = false;
+        if (ItemEquality == this || ItemEquality instanceof Pokemon) {
+            isEqual = true;
+        } else if (ItemEquality == null || getClass() != ItemEquality.getClass()) {
+            isEqual = false;
+        }
+        Item item = (Item) ItemEquality;
         return HPValue == item.HPValue && Double.compare(item.weight, weight) == 0 && Objects.equals(nameOfItem, item.nameOfItem);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(nameOfItem, HPValue, weight);
     }
 
     public String toString() {
