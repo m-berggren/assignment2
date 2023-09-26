@@ -1,23 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-class Item {
-    private String name;
-    private int weight;
-    private double value;
 
-    public Item(String name, int weight, double value) {
-        this.name = name;
-        this.weight = weight;
-        this.value = value;
-    }
-    public int getWeight(){
-        return weight;
-    }
-    public String toString() {
-        return "(" + name + ", " + weight + ", " + value + ")";
-    }
-}
 
 class itemBag {
     private int maxWeight;
