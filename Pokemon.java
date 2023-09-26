@@ -21,27 +21,26 @@ public class Pokemon {
     public String getName() {
         return this.name;
     }
-
+    public void setName(String name) {
+        this.name = name;
+    }
     public int getEnergy() {
         return this.currentEP;
     }
-
     public int getMAX_HP() {
         return this.maxHP;
     }
-
     public Skill getSkill() {
         return this.skill;
     }
-
     public String getType() {
         return this.type;
     }
-
     public int getCurrentHP() {
         return this.currentHP;
     }
 
+    // Overrides 'equals' method to create custom equality comparison.
     @Override
     public boolean equals(Object anotherObject) {
         // check if reference is equal to itself and if reference is nothing
@@ -68,6 +67,8 @@ public class Pokemon {
         return isEqual;
     }
 
+    /* Refactored check of skills to a separate method to allow for more abstraction
+    to make method 'equals' more readable. */
     private boolean checkIfSkillsAreEqual(Pokemon anotherPokemon) {
         // Method added to
         boolean isEqual = false;
@@ -81,6 +82,7 @@ public class Pokemon {
         return isEqual;
     }
 
+    // Overrides the method 'toString' to allow for custom messages.
     @Override
     public String toString() {
         String message = "";
@@ -92,14 +94,19 @@ public class Pokemon {
         return message;
     }
 
+    // If 'skill' is not null then return will be true and vice versa.
     public boolean knowsSkill() {
         return this.skill != null;
     }
 
+    // This will return the 'skill' instance variable into null state.
     public void forgetSkill() {
         this.skill = null;
     }
 
+    /* Learns a skill by creating a new instance of the 'Skill' class
+    and assigning it to the 'skill' instance variable.
+    This will overwrite any currently learned skill. */
     public void learnSkill(String nameOfSkill, int attackPower, int energyCost) {
         this.skill = new Skill(nameOfSkill, attackPower, energyCost);
     }
@@ -136,23 +143,25 @@ public class Pokemon {
             if (HPLeft > 0) {
                 defender.currentHP = HPLeft;
                 this.currentEP -= this.skill.getEnergyCost();
-                message += multiplierMessage(valueMultiplier) + "\r\n" + defender.getName() + " has " + defender.getCurrentHP() + " HP left.";
+                message += multiplierMessage( valueMultiplier ) + "\r\n" + defender.getName() + " has " + defender.getCurrentHP() + " HP left.";
 
             } else {
                 defender.currentHP = 0;
                 this.currentEP -= this.skill.getEnergyCost();
-                message += multiplierMessage(valueMultiplier) + "\r\n" + defender.getName() + " has 0 HP left. " + defender.getName()+ " faints.";
+                message += multiplierMessage( valueMultiplier ) + "\r\n" + defender.getName() + " has 0 HP left. " + defender.getName()+ " faints.";
             }
         }
         return message;
     }
 
+    // Refactored from 'attack' method to make it more readable.
     private double getValueMultiplier(String attacker, String defender) {
         Type attackerType = new Type(attacker);
         Type defenderType = new Type(defender);
         return attackerType.calculateDamage(defenderType);
     }
 
+    // This refactor ensures 'attack' method does not need added nested if statements.
     private String multiplierMessage(double multiplier) {
         String message = "";
         if (multiplier > 1) {
@@ -166,11 +175,15 @@ public class Pokemon {
 
     public void rest() {
         if (this.currentHP != 0) {
+            /* If current HP + 20 is higher than max HP it will return the lowest (maxHP),
+            similarly, if current HP + 20 is less than max HP it will return the min value. */
             this.currentHP = Math.min(this.maxHP, this.currentHP + 20);
         }
     }
 
     public void recoverEnergy() {
+        /* min method chooses the lowest value, so, if current EP + 25 is higher than 100 it chooses 100.
+        In the same way it chooses current EP + 25 if it is lower than 100. */
         this.currentEP = Math.min(100, this.currentEP + 25);
     }
 
