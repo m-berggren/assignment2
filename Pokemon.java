@@ -21,27 +21,26 @@ public class Pokemon {
     public String getName() {
         return this.name;
     }
-
+    public void setName(String name) {
+        this.name = name;
+    }
     public int getEnergy() {
         return this.currentEP;
     }
-
     public int getMAX_HP() {
         return this.maxHP;
     }
-
     public Skill getSkill() {
         return this.skill;
     }
-
     public String getType() {
         return this.type;
     }
-
     public int getCurrentHP() {
         return this.currentHP;
     }
 
+    // Overrides 'equals' method to create custom equality comparison.
     @Override
     public boolean equals(Object anotherObject) {
         // check if reference is equal to itself and if reference is nothing
@@ -68,9 +67,9 @@ public class Pokemon {
         return isEqual;
     }
 
-    // Method to check if two Skills are equal
-    // Skills are equal when their Name, AP and EP values are equal
-    public boolean checkIfSkillsAreEqual(Pokemon anotherPokemon) {
+    /* Refactored check of skills to a separate method to allow for more abstraction
+    to make method 'equals' more readable. */
+    private boolean checkIfSkillsAreEqual(Pokemon anotherPokemon) {
         // Method added to
         boolean isEqual = false;
         if(this.skill == null && anotherPokemon.getSkill() == null) {
@@ -83,107 +82,108 @@ public class Pokemon {
         return isEqual;
     }
 
+    // Overrides the method 'toString' to allow for custom messages.
     @Override
     public String toString() {
+        String message = "";
         if (!knowsSkill()) {
-            return String.format("%s (%s)", this.name, this.type);
+            message = this.name + " (" + this.type + ")";
+        } else {
+            message = this.name + " (" + this.type + "). Knows " + this.skill.toString();
         }
-        return String.format("%s (%s). Knows %s - AP: %d EC: %d",
-                this.name,
-                this.type,
-                this.skill.getNameOfSkill(),
-                this.skill.getAttackPower(),
-                this.skill.getEnergyCost());
+        return message;
     }
 
+    // If 'skill' is not null then return will be true and vice versa.
     public boolean knowsSkill() {
         return this.skill != null;
     }
 
+    // This will return the 'skill' instance variable into null state.
     public void forgetSkill() {
         this.skill = null;
     }
 
+    /* Learns a skill by creating a new instance of the 'Skill' class
+    and assigning it to the 'skill' instance variable.
+    This will overwrite any currently learned skill. */
     public void learnSkill(String nameOfSkill, int attackPower, int energyCost) {
         this.skill = new Skill(nameOfSkill, attackPower, energyCost);
     }
 
-    /*
-    Attacking/receiving damage
-    1: If the attacking pokemon is fainted, the message should be:
-        "Attack failed. <attacker> fainted."
 
-    2: If the target pokemon is fainted, the message should be:
-        "Attack failed. <target> fainted."
-
-    3: If the attacking pokemon does not know a skill, the message should be:
-        "Attack failed. <attacker> does not know a skill."
-
-    4: If the attacker knows a skill and has less energy points than the cost of the skill (ec):
-        "Attack failed. <attacker> lacks energy: <ep>/<ec>"
-
-    5: If the attacker has enough EP to use the Skill, then the attack is successful.
-        */
     public String attack(Pokemon defender) {
-        // If the attacker has fainted.
+        String message = "";
+        // If the attacker has fainted (currentHP == 0).
         if (this.currentHP == 0) {
-            return String.format("Attack failed. %s fainted.", this.name);
+            message = "Attack failed. "+ this.name + " fainted.";
 
-            // If target pokemon has fainted.
+            // If target pokemon has fainted (currentHP == 0.
         } else if (defender.currentHP == 0) {
-            return String.format("Attack failed. %s fainted.", defender.name);
+            message = "Attack failed. " + defender.getName() + " fainted.";
 
             // If attacker does not know a skill.
         } else if (!knowsSkill()) {
-            return String.format("Attack failed. %s does not know a skill.", this.name);
+            message = "Attack failed. " + this.name + " does not know a skill.";
 
-            // If the attacker knows a skill and has less energy points than the cost of the skill (ec)
+            // If the attacker knows a skill and has less energy points than the cost of the skill
         } else if (knowsSkill() && this.currentEP < skill.getEnergyCost()) {
-            return String.format("Attack failed. %s lacks energy: %d//%d",
-                    this.name,
-                    this.currentEP,
-                    skill.getEnergyCost()
-            );
+            message = "Attack failed. " + this.name + "lacks energy: " + this.currentEP + "/" + this.skill.getEnergyCost();
+
             // If attacker has enough EP to use skill, attack is successful.
         } else {
-            //
-            Type attackerType = new Type(this.type);
-            Type defenderType = new Type(defender.getType());
-            // Show if attack is super effective or not effective.
-            double valueMultiplier = attackerType.calculateDamage(defenderType);
 
-            // Show if defender faints or not after the attack.
+            // Gets a value multiplier for the attack. Possible outcomes: {0.5, 1.0, 2}.
+            double valueMultiplier = getValueMultiplier(this.type, defender.getType());
+
+            message = this.name + " uses " + this.skill.getNameOfSkill() + " on " + defender.getName() + ".";
+
             int HPLeft = defender.currentHP - (int) (this.skill.getAttackPower() * valueMultiplier);
+            // Check if defender faints or not after the attack.
             if (HPLeft > 0) {
                 defender.currentHP = HPLeft;
                 this.currentEP -= this.skill.getEnergyCost();
-                return String.format("%s%n%s has %d HP left.", multiplierMessage(valueMultiplier, defender), defender.name, defender.getCurrentHP());
+                message += multiplierMessage( valueMultiplier ) + "\r\n" + defender.getName() + " has " + defender.getCurrentHP() + " HP left.";
 
             } else {
                 defender.currentHP = 0;
                 this.currentEP -= this.skill.getEnergyCost();
-                return String.format("%s%n%s has 0 HP left. %s faints.", multiplierMessage(valueMultiplier, defender), defender.name, defender.name);
+                message += multiplierMessage( valueMultiplier ) + "\r\n" + defender.getName() + " has 0 HP left. " + defender.getName()+ " faints.";
             }
         }
+        return message;
     }
 
-    public String multiplierMessage(double multiplier, Pokemon opponent) {
+    // Refactored from 'attack' method to make it more readable.
+    private double getValueMultiplier(String attacker, String defender) {
+        Type attackerType = new Type(attacker);
+        Type defenderType = new Type(defender);
+        return attackerType.calculateDamage(defenderType);
+    }
+
+    // This refactor ensures 'attack' method does not need added nested if statements.
+    private String multiplierMessage(double multiplier) {
+        String message = "";
         if (multiplier > 1) {
-            return String.format("%s uses %s on %s. It is super effective!", this.name, this.skill.getNameOfSkill(), opponent.name);
+            message = " It is super effective!";
 
         } else if (multiplier < 1) {
-            return String.format("%s uses %s on %s. It is not very effective...", this.name, this.skill.getNameOfSkill(), opponent.name);
+            message = " It is not very effective...";
         }
-        return String.format("%s uses %s on %s.", this.name, this.skill.getNameOfSkill(), opponent.name);
+        return message;
     }
 
     public void rest() {
         if (this.currentHP != 0) {
+            /* If current HP + 20 is higher than max HP it will return the lowest (maxHP),
+            similarly, if current HP + 20 is less than max HP it will return the min value. */
             this.currentHP = Math.min(this.maxHP, this.currentHP + 20);
         }
     }
 
     public void recoverEnergy() {
+        /* min method chooses the lowest value, so, if current EP + 25 is higher than 100 it chooses 100.
+        In the same way it chooses current EP + 25 if it is lower than 100. */
         this.currentEP = Math.min(100, this.currentEP + 25);
     }
 
