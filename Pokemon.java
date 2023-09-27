@@ -116,11 +116,11 @@ public class Pokemon {
         String message = "";
         // If the attacker has fainted (currentHP == 0).
         if (this.currentHP == 0) {
-            message = "Attack failed. "+ this.name + " fainted.";
+            message = String.format("Attack failed. %s fainted.", this.name);
 
             // If target pokemon has fainted (currentHP == 0.
         } else if (defender.currentHP == 0) {
-            message = "Attack failed. " + defender.getName() + " fainted.";
+            message = String.format("Attack failed. %s fainted.", defender.getName());
 
             // If attacker does not know a skill.
         } else if (!knowsSkill()) {
@@ -136,19 +136,19 @@ public class Pokemon {
             // Gets a value multiplier for the attack. Possible outcomes: {0.5, 1.0, 2}.
             double valueMultiplier = getValueMultiplier(this.type, defender.getType());
 
-            message = this.name + " uses " + this.skill.getNameOfSkill() + " on " + defender.getName() + ".";
+            String beginningOfMessage = this.name + " uses " + this.skill.getNameOfSkill() + " on " + defender.getName() + ".";
 
             int HPLeft = defender.currentHP - (int) (this.skill.getAttackPower() * valueMultiplier);
             // Check if defender faints or not after the attack.
             if (HPLeft > 0) {
                 defender.currentHP = HPLeft;
                 this.currentEP -= this.skill.getEnergyCost();
-                message += multiplierMessage( valueMultiplier ) + "\r\n" + defender.getName() + " has " + defender.getCurrentHP() + " HP left.";
+                message = String.format("%s%s%n%s has %d HP left.", beginningOfMessage, multiplierMessage( valueMultiplier ), defender.getName(), defender.getCurrentHP());
 
             } else {
                 defender.currentHP = 0;
                 this.currentEP -= this.skill.getEnergyCost();
-                message += multiplierMessage( valueMultiplier ) + "\r\n" + defender.getName() + " has 0 HP left. " + defender.getName()+ " faints.";
+                message = String.format("%s%s%n%s has 0 HP left. %s faints.", beginningOfMessage, multiplierMessage( valueMultiplier ), defender.getName(), defender.getName());
             }
         }
         return message;
