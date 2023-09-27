@@ -38,7 +38,7 @@ public class Skill {
             isEqual = true;
         } else if (anotherObject == null) {
             isEqual = false;
-        } else {
+        } else if (anotherObject instanceof Skill) {
             Skill anotherSkill = (Skill) anotherObject;
             boolean sameName = this.nameOfSkill.equals(anotherSkill.nameOfSkill);
             boolean sameAP = this.attackPower == anotherSkill.getAttackPower();
@@ -51,6 +51,6 @@ public class Skill {
 
     // toString method to return message of Skill name, AP and EP
     public String toString() {
-        return String.format("%s -AP: %s -EP: %s", this.nameOfSkill, this.attackPower, this.energyCost);
+        return String.format("%s - AP: %s EC: %s", this.nameOfSkill, this.attackPower, this.energyCost);
     }
 }
