@@ -13,10 +13,8 @@ public class ItemBag { // creating an item bag,, item weight and item list.
         this.items = new ArrayList<>();
     }
 
-    public double addItem(Item item) { // method that adds items into the bag
-        double wasAdded = null;
+    public int addItem(Item item) { // method that adds items into the bag
         if (item != null) {
-
             if (currentWeight + item.getWeight() <= maxWeight) {
                 int indexToInsert = 0;
                 while (indexToInsert < items.size() && items.get(indexToInsert).getWeight() > item.getWeight()) {
@@ -27,10 +25,10 @@ public class ItemBag { // creating an item bag,, item weight and item list.
                 return indexToInsert;
             }
             return -1;
-
         }
-        return wasAdded;
+        return 0;
     }
+
 
     public Item removeItemAt(int index) { // method that removes items from the bag
         if (index >= 0 && index < items.size()) {
@@ -65,7 +63,7 @@ public class ItemBag { // creating an item bag,, item weight and item list.
         return currentWeight;
     }
 
-    public double getMaxWeight() { // method to get max value of the bag 
+    public double getMaxWeight() { // method to get max value of the bag
         return maxWeight;
     }
 }
