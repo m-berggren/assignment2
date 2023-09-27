@@ -13,17 +13,23 @@ public class ItemBag {
         this.items = new ArrayList<>();
     }
 
-    public int addItem(Item item) {
-        if (currentWeight + item.getWeight() <= maxWeight) {
-            int indexToInsert = 0;
-            while (indexToInsert < items.size() && items.get(indexToInsert).getWeight() > item.getWeight()) {
-                indexToInsert++;
+    public double addItem(Item item) {
+        double wasAdded = null;
+        if (item != null) {
+
+            if (currentWeight + item.getWeight() <= maxWeight) {
+                int indexToInsert = 0;
+                while (indexToInsert < items.size() && items.get(indexToInsert).getWeight() > item.getWeight()) {
+                    indexToInsert++;
+                }
+                items.add(indexToInsert, item);
+                currentWeight += item.getWeight();
+                return indexToInsert;
             }
-            items.add(indexToInsert, item);
-            currentWeight += item.getWeight();
-            return indexToInsert;
+            return -1;
+
         }
-        return -1;
+        return wasAdded;
     }
 
     public Item removeItemAt(int index) {
@@ -63,7 +69,3 @@ public class ItemBag {
         return maxWeight;
     }
 }
-
-
-
-
