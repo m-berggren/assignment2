@@ -1,67 +1,69 @@
 package assignment2;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ItemBag {
-    private int maxWeight;
-    private List<Item> items;
+    private double maxWeight;
+    private double currentWeight;
+    private ArrayList<Item> items;
 
-    public ItemBag(int maxWeight) {
+    public ItemBag(double maxWeight) {
         this.maxWeight = maxWeight;
+        this.currentWeight = 0.0;
         this.items = new ArrayList<>();
+    }
+
+    public int addItem(Item item) {
+        if (currentWeight + item.getWeight() <= maxWeight) {
+            int indexToInsert = 0;
+            while (indexToInsert < items.size() && items.get(indexToInsert).getWeight() > item.getWeight()) {
+                indexToInsert++;
+            }
+            items.add(indexToInsert, item);
+            currentWeight += item.getWeight();
+            return indexToInsert;
+        }
+        return -1;
+    }
+
+    public Item removeItemAt(int index) {
+        if (index >= 0 && index < items.size()) {
+            Item removedItem = items.remove(index);
+            currentWeight -= removedItem.getWeight();
+            return removedItem;
+        }
+        return null;
+    }
+
+    public String peekItemAt(int index) {
+        if (index >= 0 && index < items.size()) {
+            return items.get(index).toString();
+        }
+        return "";
+    }
+
+    public Item popItem() {
+        if (!items.isEmpty()) {
+            Item poppedItem = items.remove(0);
+            currentWeight -= poppedItem.getWeight();
+            return poppedItem;
+        }
+        return null;
     }
 
     public int getNumOfItems() {
         return items.size();
     }
 
-    public int getCurrentWeight() {
-        int weight = 0;
-        for (Item item : items) {
-            weight += item.getWeight(); // Access the weight of the item
-        }
-        return weight;
+    public double getCurrentWeight() {
+        return currentWeight;
     }
 
-    public int getMaxWeight() {
+    public double getMaxWeight() {
         return maxWeight;
     }
-
-    public int addItem(Item item) {
-        int itemIndex = 0;
-        int remainingCapacity = maxWeight - getCurrentWeight();
-
-        if (remainingCapacity < item.getWeight()) {
-            return -1; //cant fit the item
-        }
-
-        while (itemIndex < items.size() && item.getWeight() >= items.get(itemIndex).getWeight()) {
-            itemIndex++;
-        }
-
-        items.add(itemIndex, item);
-        return itemIndex;
-    }
-
-    public Item removeItem(int index) {
-        if (index >= 0 && index < items.size()) {
-            return items.remove(index);
-        }
-        return null; // Index is out of bounds
-    }
-
-    public String peekItem(int index) {
-        if (index >= 0 && index < items.size()) {
-            return items.get(index).toString();
-        }
-        return null; // Index is out of bounds
-    }
-
-    public Item popItem() {
-        if (!items.isEmpty()) {
-            return items.remove(0);
-        }
-        return null; // Bag is empty
-    }
 }
+
+
+
+

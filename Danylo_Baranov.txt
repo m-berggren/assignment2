@@ -3,7 +3,7 @@ Marcus, one of my teammates, and I reached an agreement to refactor each file wi
 our package "assignment2" once we complete each exercise.
 
 For exercise 2, I chose to place my class in a separate file because it conceptually
-does not belong to the "Pokemon" class. To ensure efficient code, I employed
+does not belong to the Pokemon class. To ensure efficient code, I employed
 encapsulation and created immutable objects. I designed a single class with
 three attributes and a constructor for initializing them. Secondly, I used
 a "get" method for each attribute to retrieve their values. Thirdly, I included
@@ -16,11 +16,11 @@ I used attributes, a constructor, and get methods for the item.
 Secondly, I have implemented an equality method to determine if two items are equal based on their
 HP, weight, and names. The toString method was used to truncate the weight to two
 decimals and return a message containing the name, HP, and weight of the item.
-I decided to put useItem method in "Pokemon" class because it belongs to it conceptually.
+I decided to put useItem method in Pokemon class because it belongs to it conceptually.
 
 When the new designed task was published, I don't have to change anything in my classes for skills
 and items. However, when me and Marcus refactored code, we swapped the names of enums and
-switch cases, in the order specified by the customer. I think this change to the code
+switch cases, in the order specified by the customer. I think this changes to the code
 makes it more readable, which is a very important part of the design. Secondly, we checked if each
 type multipliers is correct, to make sure your code is same to the customer specification.
 

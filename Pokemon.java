@@ -6,8 +6,6 @@ public class Pokemon {
     private final String type;
     private int currentHP;
     private int currentEP;
-
-    private boolean hasLearnedSkill;
     private Skill skill;
 
 
@@ -17,7 +15,6 @@ public class Pokemon {
         this.type = type;
         this.currentHP = maxHP;
         this.currentEP = 100;
-        this.hasLearnedSkill = false;
         this.skill = null;
     }
 
@@ -51,18 +48,37 @@ public class Pokemon {
         boolean isEqual = false;
         if (anotherObject == this) {
             isEqual = true;
-        } else if (anotherObject == null || anotherObject.getClass() != getClass()) {
+        } else if (anotherObject == null) {
             isEqual = false;
-        } else {
-            Pokemon anotherPokemon = (Pokemon) anotherObject;
+        } else if(anotherObject instanceof Pokemon) {
+
+            Pokemon anotherPokemon = (Pokemon)anotherObject;
             boolean sameName = this.name.equals(anotherPokemon.getName());
-            boolean sameSkill = this.skill.equals(anotherPokemon.getSkill());
+            boolean sameType = this.type.equals(anotherPokemon.getType());
+            boolean sameSkill = checkIfSkillsAreEqual(anotherPokemon);
             boolean sameHP = this.currentHP == anotherPokemon.getCurrentHP();
             boolean sameMaxHP = this.maxHP == anotherPokemon.getMAX_HP();
             boolean sameEP = this.currentEP == anotherPokemon.getEnergy();
-            isEqual = sameName && sameSkill && sameHP && sameMaxHP && sameEP;
-            // name, type, skill, HP, MAX HP and EP.
-            // Check the skill how?
+
+            isEqual = sameName && sameType && sameSkill && sameHP && sameMaxHP && sameEP;
+
+        } else {
+            isEqual = false;
+        }
+        return isEqual;
+    }
+
+    // Method to check if two Skills are equal
+    // Skills are equal when their Name, AP and EP values are equal
+    public boolean checkIfSkillsAreEqual(Pokemon anotherPokemon) {
+        // Method added to
+        boolean isEqual = false;
+        if(this.skill == null && anotherPokemon.getSkill() == null) {
+            isEqual = true;
+        } else if(this.skill == null && anotherPokemon.getSkill() != null){
+            isEqual = false;
+        } else {
+            isEqual = this.skill.equals(anotherPokemon.getSkill());
         }
         return isEqual;
     }
@@ -80,17 +96,15 @@ public class Pokemon {
                 this.skill.getEnergyCost());
     }
 
-
     public boolean knowsSkill() {
-        return hasLearnedSkill;
+        return this.skill != null;
     }
 
     public void forgetSkill() {
-        this.hasLearnedSkill = false;
+        this.skill = null;
     }
 
     public void learnSkill(String nameOfSkill, int attackPower, int energyCost) {
-        this.hasLearnedSkill = true;
         this.skill = new Skill(nameOfSkill, attackPower, energyCost);
     }
 
