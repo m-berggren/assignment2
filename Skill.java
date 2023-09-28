@@ -30,27 +30,10 @@ public class Skill {
         return this.energyCost;
     }
 
-    // Method to check if two Skills are equal
-    // Skills are equal when their Name, AP and EP values are equal
-    public boolean equals(Object anotherObject) {
-        boolean isEqual = false;
-        if (anotherObject == this) {
-            isEqual = true;
-        } else if (anotherObject == null) {
-            isEqual = false;
-        } else if (anotherObject instanceof Skill) {
-            Skill anotherSkill = (Skill) anotherObject;
-            boolean sameName = this.nameOfSkill.equals(anotherSkill.nameOfSkill);
-            boolean sameAP = this.attackPower == anotherSkill.getAttackPower();
-            boolean sameEP = this.energyCost == anotherSkill.getEnergyCost();
-
-            isEqual = sameName && sameAP && sameEP;
-        }
-        return isEqual;
-    }
-
     // toString method to return message of Skill name, AP and EP
     public String toString() {
-        return String.format("%s - AP: %s EC: %s", this.nameOfSkill, this.attackPower, this.energyCost);
+        String message = "";
+        message = String.format("%s - AP: %s EC: %s", this.nameOfSkill, this.attackPower, this.energyCost);
+        return message;
     }
 }

@@ -31,3 +31,4 @@ composition. Our changes in task 8 was that Oleksandr had to update the ‘Type�
 and ‘PokemonType’ enum and me and Danyl refactored the order in the file and
 performed checks to determine if multipliers were working properly.
 
+
