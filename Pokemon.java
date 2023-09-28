@@ -72,9 +72,9 @@ public class Pokemon {
     private boolean checkIfSkillsAreEqual(Pokemon anotherPokemon) {
         // Method added to
         boolean isEqual = false;
-        if(this.skill == null && anotherPokemon.getSkill() == null) {
+        if (this.skill == null && anotherPokemon.getSkill() == null) {
             isEqual = true;
-        } else if(this.skill == null && anotherPokemon.getSkill() != null){
+        } else if (this.skill == null && anotherPokemon.getSkill() != null) {
             isEqual = false;
         } else {
             isEqual = this.skill.equals(anotherPokemon.getSkill());
