@@ -2,7 +2,7 @@ package assignment2;
 
 import java.util.ArrayList;
 
-public class ItemBag { // creating an item bag,, item weight and item list.
+public class ItemBag { // creating an item bag, item weight and item list.
     private double maxWeight;
     private double currentWeight;
     private ArrayList<Item> items;

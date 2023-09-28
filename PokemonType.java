@@ -8,5 +8,5 @@ public enum PokemonType {
     DRAGON,
     ELECTRIC,
     ICE,
-    NORMAL;
+    NORMAL
 }

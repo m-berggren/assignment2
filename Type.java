@@ -10,7 +10,7 @@ public class Type {
 
     public PokemonType mapType(String typeName) {
         return switch (typeName.toLowerCase()) {
-            case "bug"  -> PokemonType.BUG;
+            case "bug" -> PokemonType.BUG;
             case "dragon" -> PokemonType.DRAGON;
             case "electric" -> PokemonType.ELECTRIC;
             case "fire" -> PokemonType.FIRE;
@@ -20,7 +20,7 @@ public class Type {
             default -> PokemonType.NORMAL;
         };
     }
-
+    
     public double calculateDamage(Type target) {
         switch (this.type) {
             case BUG:
