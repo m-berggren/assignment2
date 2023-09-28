@@ -6,13 +6,16 @@ created an external file to store the Enums for each pokemon type. Also, I decid
  was made to describe the damage multiplier for the NORMAL type attacking pokemon.
  The inner switch was used to describe the results of the attack depending on the type
  of defending pokemon. In the return values of inner switch case, I created the damage
- multipliers depending on the defender�s type, the default multiplier, which was equal
+ multipliers depending on the defender's type, the default multiplier, which was equal
  to 1, stands for standard damage with no special effects of the attack.
 
 2. When the new design task came out, I created more Enums for each of the 4 new types
- (Bug, Ice, Dragon and Electric). In the main file, I created more return cases for
- new damage multipliers between different pokemon types depending on the table in
+ (Bug, Ice, Dragon and Electric). In the Types file, I created more return cases for
+ new damage multipliers between different pokemon types depending on the values from the table in
  the request description. The model I chose for this exercise was modifiable enough,
- so I did not need to implement major code changes. For outer switch case I added each
+ so I did not need to implement major code changes after the design changes. For outer switch case I added each
  of the new types and in the inner one I described each new multiplier for new attacks
  between all types. If there was no multiplier, I returned default which is equal to 1.
+
+ Also my job was to do excercise 7. I did it using collections and following all the requirements from the assignment file.
+ New design from task 8 did not have any effect on the task 7.
