@@ -7,6 +7,7 @@ public class Skill {
     private final String nameOfSkill;
     private final int attackPower;
     private final int energyCost;
+    private Skill skill;
 
     // constructor for attributes
     public Skill(String nameOfSkill, int attackPower, int energyCost) {
@@ -28,6 +29,31 @@ public class Skill {
     //Method to get EP of Skill
     public int getEnergyCost() {
         return this.energyCost;
+    }
+
+    public boolean equals(Object anotherObject, Pokemon anotherPokemon) {
+        boolean isEqual = false;
+        if (anotherObject == this) {
+            isEqual = true;
+        } else if (anotherObject == null) {
+            isEqual = false;
+        } else {
+            Skill anotherSkill = (Skill) anotherObject;
+            boolean sameName = this.nameOfSkill.equals(anotherSkill.getNameOfSkill());
+            boolean sameEC = this.energyCost == anotherSkill.getEnergyCost();
+            boolean sameAP = this.attackPower == anotherSkill.getAttackPower();
+
+            isEqual = sameName && sameEC && sameAP;
+        }
+
+        if (this.skill == null && anotherPokemon.getSkill() == null) {
+            isEqual = true;
+        } else if (this.skill == null && anotherPokemon.getSkill() != null) {
+            isEqual = false;
+        } else {
+            isEqual = this.skill.equals(anotherPokemon.getSkill());
+        }
+        return isEqual;
     }
 
     // toString method to return message of Skill name, AP and EP

@@ -46,8 +46,6 @@ public class Pokemon {
         return this.currentHP;
     }
 
-    // Overrides 'equals' method to create custom equality comparison.
-    @Override
     public boolean equals(Object anotherObject) {
         // check if reference is equal to itself and if reference is nothing
         boolean isEqual = false;
@@ -60,7 +58,7 @@ public class Pokemon {
             Pokemon anotherPokemon = (Pokemon) anotherObject;
             boolean sameName = this.name.equals(anotherPokemon.getName());
             boolean sameType = this.type.equals(anotherPokemon.getType());
-            boolean sameSkill = checkIfSkillsAreEqual(anotherPokemon);
+            boolean sameSkill = this.skill == anotherPokemon.skill;
             boolean sameHP = this.currentHP == anotherPokemon.getCurrentHP();
             boolean sameMaxHP = this.maxHp == anotherPokemon.getMAX_HP();
             boolean sameEP = this.currentEP == anotherPokemon.getEnergy();
@@ -73,31 +71,13 @@ public class Pokemon {
         return isEqual;
     }
 
-    /* Refactored check of skills to a separate method to allow for more abstraction
-    to make method 'equals' more readable. */
-    private boolean checkIfSkillsAreEqual(Pokemon anotherPokemon) {
-        // Method added to
-        boolean isEqual = false;
-        if (this.skill == null && anotherPokemon.getSkill() == null) {
-            isEqual = true;
-        } else if (this.skill == null && anotherPokemon.getSkill() != null) {
-            isEqual = false;
-        } else {
-            isEqual = this.skill.equals(anotherPokemon.getSkill());
-        }
-        return isEqual;
-    }
-
-    // Overrides the method 'toString' to allow for custom messages.
-    @Override
     public String toString() {
-        String message = "";
+        String message = this.name + " (" + this.type + ")";
         if (!knowsSkill()) {
-            message = this.name + " (" + this.type + ")";
+            return message;
         } else {
-            message = this.name + " (" + this.type + "). Knows " + this.skill;
+            return message + ". Knows " + this.skill;
         }
-        return message;
     }
 
     // If 'skill' is not null then return will be true and vice versa.
@@ -110,9 +90,9 @@ public class Pokemon {
         this.skill = null;
     }
 
-    /* Learns a skill by creating a new instance of the 'Skill' class
-    and assigning it to the 'skill' instance variable.
-    This will overwrite any currently learned skill. */
+    // Learns a skill by creating a new instance of the 'Skill' class
+    // and assigning it to the 'skill' instance variable.
+    // This will overwrite any currently learned skill.
     public void learnSkill(String nameOfSkill, int attackPower, int energyCost) {
         this.skill = new Skill(nameOfSkill, attackPower, energyCost);
     }
@@ -181,15 +161,15 @@ public class Pokemon {
 
     public void rest() {
         if (this.currentHP != 0) {
-            /* If current HP + 20 is higher than max HP it will return the lowest (maxHP),
-            similarly, if current HP + 20 is less than max HP it will return the min value. */
+            // If current HP + 20 is higher than max HP it will return the lowest (maxHP),
+            // similarly, if current HP + 20 is less than max HP it will return the min value.
             this.currentHP = Math.min(this.maxHp, this.currentHP + 20);
         }
     }
 
     public void recoverEnergy() {
-        /* min method chooses the lowest value, so, if current EP + 25 is higher than 100 it chooses 100.
-        In the same way it chooses current EP + 25 if it is lower than 100. */
+        // min method chooses the lowest value, so, if current EP + 25 is higher than 100 it chooses 100.
+        // In the same way it chooses current EP + 25 if it is lower than 100.
         this.currentEP = Math.min(100, this.currentEP + 25);
     }
 
