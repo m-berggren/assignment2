@@ -25,13 +25,13 @@ public class Skill {
         return this.attackPower;
     }
 
-    // Method to get EP of Skill
+    // Method to get EC of Skill
     public int getEnergyCost() {
         return this.energyCost;
     }
 
     // Method to check if two Skills are equal
-    // Skills are equal when their name, EC and AP values are equal,
+    // --> Skills are equal when their name, EC and AP values are equal,
     public boolean equals(Object anotherObject) {
         boolean isEqual = false;
         if (anotherObject == this) {
@@ -48,7 +48,7 @@ public class Skill {
         return isEqual;
     }
 
-    // toString method to return message of Skill name, AP and EP
+    // toString method to return message of Skill name, AP and EC
     public String toString() {
         String message = "";
         message = String.format("%s - AP: %s EC: %s", this.nameOfSkill, this.attackPower, this.energyCost);
