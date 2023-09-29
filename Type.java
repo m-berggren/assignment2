@@ -5,7 +5,6 @@ public class Type {
     private final PokemonType type;
 
     public Type(String type) {
-        //this.type = mapType(type);
         this.type = PokemonType.valueOf(String.format("%S", type));
     }
 

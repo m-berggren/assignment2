@@ -8,7 +8,7 @@ public enum PokemonType {
     DRAGON("DRAGON"),
     ELECTRIC("ELECTRIC"),
     ICE("ICE"),
-    NORMAL("NORMAL");
+    NORMAL("NOSMAL");
 
     final String type;
 

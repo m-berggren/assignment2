@@ -2,18 +2,18 @@ package assignment2;
 
 public class Pokemon {
     private String name;
-    private final int maxHp;
+    private final int maxHP;
     private final String type;
     private int currentHP;
     private int currentEP;
     private Skill skill;
 
 
-    public Pokemon(String pokemonName, int maxHp, String type) {
+    public Pokemon(String pokemonName, int maxHP, String type) {
         this.name = pokemonName;
-        this.maxHp = maxHp;
+        this.maxHP = maxHP;
         this.type = type;
-        this.currentHP = maxHp;
+        this.currentHP = maxHP;
         this.currentEP = 100;
         this.skill = null;
     }
@@ -31,7 +31,7 @@ public class Pokemon {
     }
 
     public int getMAX_HP() {
-        return this.maxHp;
+        return this.maxHP;
     }
 
     public Skill getSkill() {
@@ -60,7 +60,7 @@ public class Pokemon {
             boolean sameType = this.type.equals(anotherPokemon.getType());
             boolean sameSkill = this.skill == anotherPokemon.skill;
             boolean sameHP = this.currentHP == anotherPokemon.getCurrentHP();
-            boolean sameMaxHP = this.maxHp == anotherPokemon.getMAX_HP();
+            boolean sameMaxHP = this.maxHP == anotherPokemon.getMAX_HP();
             boolean sameEP = this.currentEP == anotherPokemon.getEnergy();
 
             isEqual = sameName && sameType && sameSkill && sameHP && sameMaxHP && sameEP;
@@ -163,7 +163,7 @@ public class Pokemon {
         if (this.currentHP != 0) {
             // If current HP + 20 is higher than max HP it will return the lowest (maxHP),
             // similarly, if current HP + 20 is less than max HP it will return the min value.
-            this.currentHP = Math.min(this.maxHp, this.currentHP + 20);
+            this.currentHP = Math.min(this.maxHP, this.currentHP + 20);
         }
     }
 
@@ -177,14 +177,14 @@ public class Pokemon {
         String message = "";
         // Check if HP of Pokemon is equal to his Max HP
         // If the statement is true then Pokemon could not use item
-        if (this.currentHP == this.maxHp) {
+        if (this.currentHP == this.maxHP) {
             message = String.format("%s could not use %s. HP is already full.", this.name, nameOfObject.getNameOfItem());
             return message;
         }
 
         // initialise variable healthHealed, to get healed HP after using item
         // (if item HP heal value + current HP of Pokemon is bigger than Pokemon Max HP)
-        int healthHealed = Math.min(this.maxHp - this.currentHP, nameOfObject.getHpValue());
+        int healthHealed = Math.min(this.maxHP - this.currentHP, nameOfObject.getHpValue());
         this.currentHP += healthHealed;
 
         // return which item was used and what amount of HP it healed
