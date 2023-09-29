@@ -26,7 +26,7 @@ public class Skill {
         return this.attackPower;
     }
 
-    //Method to get EP of Skill
+    // Method to get EP of Skill
     public int getEnergyCost() {
         return this.energyCost;
     }

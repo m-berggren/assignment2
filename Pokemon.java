@@ -176,7 +176,7 @@ public class Pokemon {
     public String useItem(Item nameOfObject) {
         String message = "";
         // Check if HP of Pokemon is equal to his Max HP
-        // If the statement is true then Pokemon can not use item
+        // If the statement is true then Pokemon could not use item
         if (this.currentHP == this.maxHp) {
             message = String.format("%s could not use %s. HP is already full.", this.name, nameOfObject.getNameOfItem());
             return message;
@@ -187,7 +187,7 @@ public class Pokemon {
         int healthHealed = Math.min(this.maxHp - this.currentHP, nameOfObject.getHpValue());
         this.currentHP += healthHealed;
 
-        // return what item was used and what amount of HP it healed
+        // return which item was used and what amount of HP it healed
         message = String.format("%s used %s. It healed %s HP.", this.name, nameOfObject.getNameOfItem(), healthHealed);
         return message;
     }

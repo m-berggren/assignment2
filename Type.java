@@ -5,20 +5,8 @@ public class Type {
     private final PokemonType type;
 
     public Type(String type) {
-        this.type = mapType(type);
-    }
-
-    public PokemonType mapType(String typeName) {
-        return switch (typeName.toLowerCase()) {
-            case "bug" -> PokemonType.BUG;
-            case "dragon" -> PokemonType.DRAGON;
-            case "electric" -> PokemonType.ELECTRIC;
-            case "fire" -> PokemonType.FIRE;
-            case "grass" -> PokemonType.GRASS;
-            case "ice" -> PokemonType.ICE;
-            case "water" -> PokemonType.WATER;
-            default -> PokemonType.NORMAL;
-        };
+        //this.type = mapType(type);
+        this.type = PokemonType.valueOf(String.format("%S", type));
     }
 
     public double calculateDamage(Type target) {

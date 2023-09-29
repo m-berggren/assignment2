@@ -29,7 +29,6 @@ public class ItemBag { // creating an item bag, item weight and item list.
         return 0;
     }
 
-
     public Item removeItemAt(int index) { // method that removes items from the bag
         if (index >= 0 && index < items.size()) {
             Item removedItem = items.remove(index);
