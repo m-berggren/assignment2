@@ -31,27 +31,23 @@ public class Skill {
         return this.energyCost;
     }
 
+    // Method to check if two Skills are equal
+    // Skills are equal when their name, EC and AP values are equal,
+    // As well if two skills are equal to null.
     public boolean equals(Object anotherObject, Pokemon anotherPokemon) {
         boolean isEqual = false;
         if (anotherObject == this) {
             isEqual = true;
         } else if (anotherObject == null) {
             isEqual = false;
+        } else if (this.skill == null && anotherPokemon.getSkill() == null) {
+            isEqual = true;
         } else {
             Skill anotherSkill = (Skill) anotherObject;
             boolean sameName = this.nameOfSkill.equals(anotherSkill.getNameOfSkill());
             boolean sameEC = this.energyCost == anotherSkill.getEnergyCost();
             boolean sameAP = this.attackPower == anotherSkill.getAttackPower();
-
             isEqual = sameName && sameEC && sameAP;
-        }
-
-        if (this.skill == null && anotherPokemon.getSkill() == null) {
-            isEqual = true;
-        } else if (this.skill == null && anotherPokemon.getSkill() != null) {
-            isEqual = false;
-        } else {
-            isEqual = this.skill.equals(anotherPokemon.getSkill());
         }
         return isEqual;
     }

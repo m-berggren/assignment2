@@ -20,7 +20,7 @@ public class Type {
             default -> PokemonType.NORMAL;
         };
     }
-    
+
     public double calculateDamage(Type target) {
         switch (this.type) {
             case BUG:
