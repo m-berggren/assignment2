@@ -15,6 +15,7 @@ public enum PokemonType {
     PokemonType(String type) {
         this.type = type;
     }
+
     public String toString() {
         return this.type;
     }

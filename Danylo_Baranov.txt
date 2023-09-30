@@ -1,27 +1,18 @@
-During the discussion with my team, I made the decision to take exercises 2 and 6.
-Marcus, one of my teammates, and I reached an agreement to refactor each file within
-our package "assignment2" once we complete each exercise.
+Oleksandr did Exercise 8, which was built upon Exercise 4. He created a new class named "Type",
+with an encapsulated immutable attribute, and constructor for it, as well as a new file with
+enums named "PokemonType" where various Pokemon types (WATER, FIRE, GRASS, and NORMAL) are stored.
+Secondly, he created a "calculateDamage" method containing nested switch cases. The outer switch
+case is responsible for different Pokemon types, while the inner one adjusts the damage multiplier
+based on the interaction with the defending Pokemon type. There are three types of damage multipliers:
+half (returning 0.5), normal (returning 1), and double damage (returning 2) respectively.
 
-For exercise 2, I chose to place my class in a separate file because it conceptually
-does not belong to the Pokemon class. To ensure efficient code, I employed
-encapsulation and created immutable objects. I designed a single class with
-three attributes and a constructor for initializing them. Secondly, I used
-a "get" method for each attribute to retrieve their values. Thirdly, I included
-a method to check the equality of two skills and a "toString" method that returns
-a message with the name, AP, and EP of the item.
+When the new task was assigned, I didn't have to make any changes to my classes for skills and items.
+However, when Marcus and I refactored the code, we swapped the names of the enums and switch cases,
+following the order specified by the customer. I believe these changes to the code enhance readability,
+which is a crucial aspect of design. Additionally, we ensured that each type multiplier is correct to
+confirm that our code aligns with the customer's specifications.
 
-In exercise 6, I again utilized encapsulation and immutable objects due to the
-assigned task, which specified that items cannot be changed once created.
-I used attributes, a constructor, and get methods for the item.
-Secondly, I have implemented an equality method to determine if two items are equal based on their
-HP, weight, and names. The toString method was used to truncate the weight to two
-decimals and return a message containing the name, HP, and weight of the item.
-I decided to put useItem method in Pokemon class because it belongs to it conceptually.
-
-When the new designed task was published, I don't have to change anything in my classes for skills
-and items. However, when me and Marcus refactored code, we swapped the names of enums and
-switch cases, in the order specified by the customer. I think this changes to the code
-makes it more readable, which is a very important part of the design. Secondly, we checked if each
-type multipliers is correct, to make sure your code is same to the customer specification.
-
-
+Meanwhile, Oleksandr has added new enums (BUG, DRAGON, ELECTRIC, ICE) to the "PokemonType" file. Furthermore,
+in the "Type" class, he created four new switch cases for the new types, along with the corresponding damage
+multipliers as specified by the customer. From the beginning, my teammate chose the correct strategy, and his
+code design was adaptable. Because of that, he added new types from the specification without encountering any issues.
