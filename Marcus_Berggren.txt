@@ -1,34 +1,21 @@
-During the first meet up we structured up our initial thoughts on the design for
-This assignment. We aimed to create modular code with clear classes to enable high
-level abstraction. To create good composition, we knew the ‘Pokemon’ class would likely
-need to be the composite class and would store objects of the component classes. With
-this in mind, we could more easily distribute tasks between the group. I took on
-implementing the ‘Pokemon’ class which meant that task 1, 3 and 5 matched well. The
-other classes we decided on were ‘Skill’ and ‘Type’, as we already knew ‘Item’ and
-‘ItemBag’ were necessary in the assignment.
+My colleague Oleksandr took on task 4 and subsequently task 8. We had decided
+early on that we would need ‘Type’ as a separate class file along with an enum file
+‘PokemonType’. This enum file encapsulates the various Pokémon types as constants.
+Each type, WATER, FIRE, GRASS, NORMAL, as constants are inherently immutable,
+which means that once they are defined, their values will remain and cannot be
+accidentally modified. The ’Type’ class, on the other hand, utilizes an encapsulated
+instance of the ‘PokemonType’ enum as its attribute and a constructor to initialize it. The
+method ‘calculateDamage’ is the focal point of this class, it uses nested switch-
+cases to calculate a damage multiplier with the return type as a double of three possible 
+outcomes: 0.5, 1.0 or 2.0. The outer switch-case is responsible for handling the
+attacking Pokémons type as its controlling expression. Each case in the outer switch
+corresponds to a different attacking type. The inner switch-case is responsible for
+determining the damage multiplier based on the defending Pokémons type.
 
-I wanted to create the ‘Pokemon’ class with good encapsulation, immutability and
-composition, and effectively use design patterns such as method overriding and
-abstraction to provide well-structured and maintainable code. The class attributes were
-defined private, and the constructor written to initialize them. I then created getter
-methods to access them and setters if they were not made to be immutable. Most
-methods were set as public so they could be accessed outside the class, but in some
-cases helper methods were used to aid abstraction and execution of other methods
-within the class. In this case these methods were set as private and the names were
-made longer, more descriptive like ‘checkIfValuesAreEqual’ and ‘getValueMultiplier’, to
-make the code more readable and maintainable.
-
-The ’Pokemon’ class uses composition to create complex objects by combining simpler
-ones, examples can be seen where ‘learnSkill’ ties a ‘Skill’ object to a Pokemon, or when
-‘getValueMultiplier’ combines objects from ‘Type’ class to create more complex
-behaviour.
-
-Task 8 did not force us to make any large changes and there were no changes made to
-the ‘Pokemon’ class. Our initial design was to have all behaviours tied to
-‘Pokemon’ class and when possible, to move objects to separate classes. This proved to
-be a good solution for task 8 while applying encapsulation, abstraction and proper
-composition. Our changes in task 8 was that Oleksandr had to update the ‘Type’ class
-and ‘PokemonType’ enum and me and Danyl refactored the order in the file and
-performed checks to determine if multipliers were working properly.
-
-
+When task 8 was introduced Oleksandr did basically only have to add ICE , BUG,
+DRAGON, ELECTRIC in ‘PokemonType’ and add 4 additional switch cases. Danyl and I
+did not have to change our classes, and we mainly refactored the order in the ‘Type’ file,
+incorporated ‘return switch’ (for readability) and performed checks to determine if
+multipliers were working properly. This was the result of good design choice by
+Oleksandr to use switch-case structure in task 4, that made for clear and organized way
+to handle different type interaction.
